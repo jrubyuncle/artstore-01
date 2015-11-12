@@ -1,28 +1,18 @@
+<div class="row">
+  <% @products.each do |product| %>
+    <div class="col-xs-6 col-md-3">
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Desc</th>
-        <th>Quantity</th>
-        <th>Price</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @products.each do |product| %>
-        <tr>
-          <td><%= product.title %></td>
-          <td><%= product.description %></td>
-          <td><%= product.quantity %></td>
-          <td><%= product.price %></td>
-          <td>
-                <% if product.photo.present? %>
-                <%= image_tag(product.photo.image, class: "thumbnail") %>
-                <% end %>
-          </td>
-        </tr>
+      <%= link_to(product_path(product)) do %>
+
+        <% if product.photo.present? %>
+          <%= image_tag(product.photo.image.thumb.url, class: "thumbnail") %>
+        <% else %>
+          <%= image_tag("http://placehold.it/200x200&text=No Pic", class: "thumbnail") %>
+        <% end %>
       <% end %>
 
-    </tbody>
+      <%= product.title %> $ <%= product.price %>
+    </div>
 
-  </table>
+  <% end %>
+</div>
