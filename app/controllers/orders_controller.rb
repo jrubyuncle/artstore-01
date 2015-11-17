@@ -1,13 +1,19 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
 
+  def show
+    @order = Order.find(params[:id])
+    @order_info = @order.info
+    @order_items = @order.items
+  end
+
   def create
     @order = current_user.orders.build(order_params)
 
     if @order.save
       @order.build_item_cache_from_cart(current_cart)
       @order.calculate_total!(current_cart)
-      recirect_to order_path(@order)
+      redirect_to order_path(@order)
     else
       render "carts/checkout"
     end
